@@ -8,22 +8,29 @@ import LogoLeft from './logo-left.svg';
 
 function pageLoad() {
     const leftCol = document.createElement('div');
-    const centerCol = document.querySelector('.centerCol');
+    const centerCol = document.createElement('div');
     const rightCol = document.createElement('div');
+    const menuPage = document.createElement('div');
 
     leftCol.classList.add('leftCol');
     centerCol.classList.add('centerCol');
     rightCol.classList.add('rightCol');
+    menuPage.classList.add('menuPage');
 
-    document.body.append(leftCol, centerCol, rightCol);
+    document.body.append(leftCol, centerCol, rightCol, menuPage);
 
     //timer needed to allow dom elements to render
     setTimeout(() => {
-        centerCol.scrollIntoView({ behavior: 'auto', block: 'center' });
-    }, 100); 
-      
-    
-    
+        centerCol.scrollIntoView({ behavior: 'auto', block: 'end' });
+    }, 100);
+
+    window.addEventListener('resize', () => {
+        centerCol.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        removeReturnBtn();
+    })
+
+
+
     const logoCenter = document.createElement('img');
     logoCenter.classList.add('center');
     logoCenter.src = LogoCenter;
@@ -49,8 +56,9 @@ function pageLoad() {
     logoLeft.src = LogoLeft;
 
     petals.push(logoTop, logoRight, logoBottom, logoLeft);
-
-    const logoContainer = document.querySelector('.logo-container');
+    const logoContainer = document.createElement('div');
+    logoContainer.classList.add('logo-container');
+    centerCol.appendChild(logoContainer);
     logoContainer.appendChild(logoCenter);
     setTimeout(() => {
         petals.forEach((petal, index) => {
@@ -65,7 +73,7 @@ function pageLoad() {
 
     const restaurantName = document.createElement('h1');
     restaurantName.id = 'name';
-    restaurantName.textContent = 'RoseBud Saloon';
+    restaurantName.textContent = 'The RoseBud';
 
     setTimeout(() => {
         header.appendChild(restaurantName)
@@ -81,33 +89,52 @@ function pageLoad() {
     function changePage(e) {
         let page;
         const petal = e.target;
-        let oppositeId;
-        let returnBtn;
-        if (petal.id === 'left') {
-            page = document.querySelector('.leftCol');
-            returnBtn = document.querySelector('#right')
-        } else if (petal.id === 'right') {
-            page = document.querySelector('.rightCol');
-            returnBtn = document.querySelector('#left');
-        } else if (petal.id === 'top') {
-            oppositeId = 'bottom';
+        if (petal.id !== 'return') {
+            let oppositeId;
+            let returnBtn;
+            if (petal.id === 'left') {
+                page = document.querySelector('.leftCol');
+                returnBtn = document.querySelector('#right')
+            } else if (petal.id === 'right') {
+                page = document.querySelector('.rightCol');
+                returnBtn = document.querySelector('#left');
+            } else if (petal.id === 'bottom') {
+                page = document.querySelector('.menuPage');
+                returnBtn = document.querySelector('#top');
+            } else {
+                oppositeId = 'top';
+            }
+            getReturnBtn(petal.id, returnBtn);
         } else {
-            oppositeId = 'top';
+            page = document.querySelector('.centerCol');
+            console.log(petal.id);
         }
-        
-        page.scrollIntoView({behavior:'smooth'});
-        getReturnBtn(petal.id, returnBtn);
+        page.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    };
+
+    function removeReturnBtn() {
+        const buttons = document.querySelectorAll('.returnBtn');
+        buttons.forEach(btn => btn.remove());
     };
 
     function getReturnBtn(scrollDirection, returnBtn) {
-    const btn = returnBtn.cloneNode();
-    btn.classList.add('returnBtn');
-        if(scrollDirection === 'left'){
+        const btn = returnBtn.cloneNode();
+        btn.id = 'return';
+        btn.classList.add('returnBtn');
+        if (scrollDirection === 'left') {
             btn.style.right = '16px';
-        } else if (scrollDirection === 'right'){
+        } else if (scrollDirection === 'right') {
             btn.style.left = '16px';
+        } else if (scrollDirection === 'bottom'){
+            btn.style.top = '11vh';
+            btn.style.right = '318px';
         }
         document.body.appendChild(btn);
+
+        btn.addEventListener('click', (e) => {
+            changePage(e);
+            removeReturnBtn();
+        }, { once: true })
     }
 
     function removeInfo() {
@@ -124,10 +151,10 @@ function pageLoad() {
 
         if (id === 'left') {
             info.textContent = 'About Us';
-            info.style.left = `${rect.left-100}px`;
+            info.style.left = `${rect.left - 100}px`;
         } else if (id === 'right') {
             info.textContent = 'Contact Us';
-            info.style.left = `${rect.right+20}px`;
+            info.style.left = `${rect.right + 20}px`;
         } else {
             info.textContent = 'Menu';
             info.style.bottom = `-16px`;
@@ -146,16 +173,23 @@ function pageLoad() {
 
     function returnToMain(e) {
         const returnBtn = e.target;
-        
+
         petals.forEach(petal => {
             petal.addEventListener('mouseover', displayInfo)
-        petal.addEventListener('mouseleave', removeInfo)
+            petal.addEventListener('mouseleave', removeInfo)
         })
 
         if (returnBtn.id !== 'top') {
             returnBtn.addEventListener('click', changePage);
         }
     };
+
+
+    const menuHeader = document.createElement('header');
+    const menuTitle = document.createElement('h1');
+    menuTitle.textContent = 'Menu';
+    menuHeader.appendChild(menuTitle);
+    menuPage.appendChild(menuHeader);
 
 
     //const about = document.createElement('p');

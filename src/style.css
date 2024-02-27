@@ -7,12 +7,12 @@
 
 
 body {
-    height: 100vh;
+
     position: relative;
-    overflow: hidden;
+    overflow: scroll;
     display: grid;
     grid-template-columns: 100vw 100vw 100vw;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto auto auto;
     align-items: center;
     justify-items: center;
     font-family: "Aboreto", system-ui;
@@ -98,6 +98,11 @@ h1 {
 .top-transform {
     width: 50px;
     bottom: 295px;
+}
+
+#return.top:hover {
+    transform: translateY(-12px);
+    transition: 0.5s;
 }
 
 
@@ -226,7 +231,7 @@ h1 {
 
 .centerCol {
     grid-column: 2 / 3;
-    height: 100%;
+    height: calc(100vh - 60px);
     width: 100%;
     background-color: rgb(94, 90, 120);
     display: grid;
@@ -238,14 +243,14 @@ h1 {
 .leftCol {
     grid-column: 1 / 2;
     background-color: aquamarine;
-    height: 100%;
+    height: calc(100vh - 60px);
     width: 100%;
 }
 
 .rightCol {
     grid-column: 3 / 4;
     background-color: rgb(12, 120, 84);
-    height: 100%;
+    height: calc(100vh - 60px);
     width: 100%;
 }
 
@@ -253,4 +258,15 @@ h1 {
     position: fixed;
     top: 50vh;
     height: 50px;
+}
+
+.menuPage {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+    height: 100vh;
+    width: 100%;
+
+    display: grid;
+    grid-row: auto 1fr;
+    background-color: rgb(5, 151, 188);
 }
