@@ -9,7 +9,7 @@
 body {
 
     position: relative;
-    overflow: scroll;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 100vw 100vw 100vw;
     grid-template-rows: auto auto auto auto;
@@ -23,7 +23,7 @@ header {
     grid-row: 1 / 2;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     width: 100%;
     height: 60px;
 
@@ -87,6 +87,15 @@ h1 {
 .left,
 .right {
     height: 200px;
+    cursor: pointer;
+}
+
+#return.left, 
+#return.right {
+    top: 0px;
+    bottom: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .top {
@@ -95,9 +104,12 @@ h1 {
     animation: fadeIn 0.8s, slideUp 0.6s;
 }
 
-.top-transform {
-    width: 50px;
-    bottom: 295px;
+#return.top {
+    top: 11vh;
+    left: 0px;
+    right: 0px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #return.top:hover {
@@ -107,6 +119,7 @@ h1 {
 
 
 .bottom {
+    cursor: pointer;
     grid-column: 2 / 5;
     grid-row: 4 / 6;
     animation: fadeIn 0.8s ease-in, slideDown 0.6s;
@@ -131,13 +144,6 @@ h1 {
     left: -100vw;
 }
 
-.left-transform {
-    grid-column: 1 / 3;
-    grid-row: 2 / 5;
-    position: fixed;
-    left: 16px;
-}
-
 @keyframes toLeft {
     0% {}
 }
@@ -156,12 +162,6 @@ h1 {
 .right:hover {
     transform: translateX(12px);
     transition: 0.5s;
-}
-
-.right-transform {
-    height: 50px;
-    right: -295px;
-    bottom: 270px;
 }
 
 @keyframes enlarge-in {
@@ -242,22 +242,26 @@ h1 {
 
 .leftCol {
     grid-column: 1 / 2;
-    background-color: aquamarine;
+    background-color: #5e5a78;
     height: calc(100vh - 60px);
     width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .rightCol {
     grid-column: 3 / 4;
-    background-color: rgb(12, 120, 84);
+    background-color: #5e5a78;
     height: calc(100vh - 60px);
     width: 100%;
 }
 
 .returnBtn {
     position: fixed;
-    top: 50vh;
-    height: 50px;
+    max-height: 50px;
+    max-width: 50px;
 }
 
 .menuPage {
@@ -267,6 +271,73 @@ h1 {
     width: 100%;
 
     display: grid;
-    grid-row: auto 1fr;
-    background-color: rgb(5, 151, 188);
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+    background-color: #5e5a78;
+}
+
+.menuContainer{
+    overflow: scroll;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    padding: 90px 35px;
+}
+
+.menu {
+    background-color: #e1e1e1;
+    height: fit-content;
+    width: 80%;
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+    padding: 0px 10px 20px;
+}
+
+.menuHeader {
+    background-color: #e1e1e1;
+    border-bottom: 0.8px solid black;
+}
+
+.menuItemsContainer > div{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+}
+
+h3 {
+    margin-top: 10px;
+    border-bottom: 0.5px solid black;
+}
+
+h5 {
+    font-weight: 500;
+}
+
+.price {
+font-size: 8px;
+text-shadow: 0.3px 0.2px;
+}
+
+.dish {
+font-size: 10px;
+}
+
+.aboutContainer {
+    width: 50%;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 30px;
+    padding: 30px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.aboutContainer p {
+    font-size: 15px;
+    line-height: 25px;
 }

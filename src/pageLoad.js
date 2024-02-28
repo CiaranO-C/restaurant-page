@@ -79,12 +79,18 @@ function pageLoad() {
         header.appendChild(restaurantName)
     }, 4300);
 
-    for (let i = 1; i < petals.length; i++) {
-        const petal = petals[i];
-        petal.addEventListener('click', changePage);
-        petal.addEventListener('mouseover', displayInfo);
-        petal.addEventListener('mouseleave', removeInfo);
-    };
+
+    setTimeout(() => {
+        for (let i = 1; i < petals.length; i++) {
+            const petal = petals[i];
+            petal.addEventListener('click', changePage);
+            petal.addEventListener('mouseover', displayInfo);
+            petal.addEventListener('mouseleave', removeInfo);
+
+            petal
+        };
+    }, 4300);
+
 
     function changePage(e) {
         let page;
@@ -101,6 +107,8 @@ function pageLoad() {
             } else if (petal.id === 'bottom') {
                 page = document.querySelector('.menuPage');
                 returnBtn = document.querySelector('#top');
+                const menus = document.querySelector('.menuContainer');
+                menus.scrollTop = 0;
             } else {
                 oppositeId = 'top';
             }
@@ -125,9 +133,8 @@ function pageLoad() {
             btn.style.right = '16px';
         } else if (scrollDirection === 'right') {
             btn.style.left = '16px';
-        } else if (scrollDirection === 'bottom'){
-            btn.style.top = '11vh';
-            btn.style.right = '318px';
+        } else if (scrollDirection === 'bottom') {
+
         }
         document.body.appendChild(btn);
 
@@ -187,12 +194,191 @@ function pageLoad() {
 
     const menuHeader = document.createElement('header');
     const menuTitle = document.createElement('h1');
-    menuTitle.textContent = 'Menu';
+    menuTitle.textContent = 'Menus';
     menuHeader.appendChild(menuTitle);
-    menuPage.appendChild(menuHeader);
+
+    const menuContainer = document.createElement('div');
+    const menuLeft = document.createElement('div');
+    const menuRight = document.createElement('div');
+
+    menuContainer.classList.add('menuContainer');
+    menuLeft.classList.add('menu');
+    menuRight.classList.add('menu');
+    menuLeft.id = 'Lunch';
+    menuRight.id = 'Dinner';
+
+    const lunchMenu = [
+        {
+            title: "Garden Salad",
+            description: "Fresh mixed greens, cherry tomatoes, cucumbers, and balsamic vinaigrette",
+            price: "$6.99",
+            category: "starter"
+        },
+        {
+            title: "Vegetable Spring Rolls",
+            description: "Crispy spring rolls filled with fresh vegetables, served with sweet chili sauce",
+            price: "$8.99",
+            category: "starter"
+        },
+        {
+            title: "Soup of the Day",
+            description: "Chef's daily selection of homemade soup, served with crusty bread",
+            price: "$5.99",
+            category: "starter"
+        },
+        {
+            title: "Grilled Chicken Breast",
+            description: "Juicy grilled chicken breast served with roasted vegetables and mashed potatoes",
+            price: "$14.99",
+            category: "main"
+        },
+        {
+            title: "Pasta Primavera",
+            description: "Linguine pasta tossed with seasonal vegetables in a light garlic sauce",
+            price: "$12.99",
+            category: "main"
+        },
+        {
+            title: "Beef Burger",
+            description: "Angus beef patty topped with lettuce, tomato, onion, and your choice of cheese, served with fries",
+            price: "$13.99",
+            category: "main"
+        }
+    ];
+
+    const dinnerMenu = [
+        {
+            title: "Caprese Salad",
+            description: "Fresh mozzarella, tomatoes, and basil drizzled with balsamic glaze",
+            price: "$9.99",
+            category: "starter"
+        },
+        {
+            title: "Spinach Artichoke Dip",
+            description: "Creamy spinach and artichoke dip served with crispy tortilla chips",
+            price: "$10.99",
+            category: "starter"
+        },
+        {
+            title: "Stuffed Mushrooms",
+            description: "Mushroom caps filled with a savory blend of cream cheese, garlic, and herbs",
+            price: "$8.99",
+            category: "starter"
+        },
+        {
+            title: "Grilled Ribeye Steak",
+            description: "Juicy ribeye steak seasoned and grilled to perfection, served with mashed potatoes and steamed vegetables",
+            price: "$24.99",
+            category: "main"
+        },
+        {
+            title: "Lemon Herb Roasted Chicken",
+            description: "Tender roasted chicken marinated in lemon and herbs, served with wild rice and roasted vegetables",
+            price: "$18.99",
+            category: "main"
+        },
+        {
+            title: "Pan-Seared Salmon",
+            description: "Fresh salmon fillet pan-seared with a lemon dill sauce, served with quinoa and sautéed spinach",
+            price: "$21.99",
+            category: "main"
+        },
+        {
+            title: "New York Cheesecake",
+            description: "Classic creamy cheesecake topped with fresh strawberries",
+            price: "$7.99",
+            category: "dessert"
+        },
+        {
+            title: "Chocolate Lava Cake",
+            description: "Warm chocolate cake with a gooey molten chocolate center, served with vanilla ice cream",
+            price: "$8.99",
+            category: "dessert"
+        },
+        {
+            title: "Tiramisu",
+            description: "Layers of espresso-soaked ladyfingers and mascarpone cream, dusted with cocoa powder",
+            price: "$9.99",
+            category: "dessert"
+        }
+    ];
+
+    function generateMenu(menu) {
+        const menuHeader = document.createElement('header');
+        menuHeader.classList.add('menuHeader');
+        const menuTitle = document.createElement('h2');
+        menuTitle.textContent = menu.id;
+        menuHeader.appendChild(menuTitle);
+
+        const menuItemsContainer = document.createElement('div');
+        menuItemsContainer.classList.add('menuItemsContainer');
+
+        const starters = document.createElement('div');
+        const startersTitle = document.createElement('h3');
+        startersTitle.textContent = 'Starters';
+        starters.appendChild(startersTitle);
+
+        const mains = document.createElement('div');
+        const mainsTitle = document.createElement('h3');
+        mainsTitle.textContent = 'Mains';
+        mains.appendChild(mainsTitle);
+
+        const deserts = document.createElement('div');
+        const desertsTitle = document.createElement('h3');
+        desertsTitle.textContent = 'Deserts';
+        deserts.appendChild(desertsTitle);
+
+        let menuItems = [];
+        (menu.id === 'Lunch') ? menuItems = lunchMenu : menuItems = dinnerMenu;
+
+        menuItems.forEach(dish => {
+            const dishContainer = document.createElement('div');
+            dishContainer.classList.add('dishContainer');
+
+            const dishTitle = document.createElement('h5');
+            const dishDesc = document.createElement('p');
+            dishDesc.classList.add('dish');
+            const price = document.createElement('p');
+            price.classList.add('price');
+
+            dishTitle.textContent = dish.title;
+            dishDesc.textContent = dish.description;
+            price.textContent = dish.price;
+
+            dishContainer.append(dishTitle, dishDesc, price);
+            if (dish.category === 'starter') {
+                starters.appendChild(dishContainer);
+            } else if (dish.category === 'main') {
+                mains.appendChild(dishContainer);
+            } else {
+                deserts.appendChild(dishContainer);
+            };
+        });
+
+        menuItemsContainer.append(starters, mains)
+        if (menu.id === 'Dinner') {menuItemsContainer.appendChild(deserts)};
+        menu.append(menuHeader, menuItemsContainer);
+    };
 
 
-    //const about = document.createElement('p');
-    //about.textContent = 'Welcome to RoseBud Saloon, experience our thoughtfully curated menu, highlighting locally sourced ingredients. With our cozy ambiance and attentive service, each visit promises a memorable dining journey. Join us at Holme for an unforgettable gastronomic adventure.'
+    generateMenu(menuLeft);
+    generateMenu(menuRight);
 
+    menuContainer.append(menuLeft, menuRight);
+
+    menuPage.append(menuHeader, menuContainer);
+
+
+
+    const aboutContainer = document.createElement('div');
+    aboutContainer.classList.add('aboutContainer');
+    const aboutTitle = document.createElement('h4');
+    aboutTitle.textContent = 'About Us';
+
+    const about = document.createElement('p');
+    about.innerHTML = 'Welcome to The RoseBud,<br>experience our thoughtfully curated menu, highlighting locally sourced ingredients. With our cozy ambiance and attentive service, you wont be dissapointed<br><br>Visit The RoseBud for an unforgettable experience'
+    aboutContainer.append(aboutTitle, about);
+    leftCol.append(aboutContainer);
+
+    //date picker elem.min = new Date().toLocaleDateString('en-ca')
 }
