@@ -1,4 +1,5 @@
 export {leftCol, centerCol, rightCol, menuPage};
+import { removeReturnBtn } from "./centerPage";
 
 const leftCol = document.createElement('div');
 const centerCol = document.createElement('div');

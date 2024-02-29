@@ -89,11 +89,6 @@ export function centerPage() {
         page.scrollIntoView({ behavior: 'smooth', block: 'end' });
     };
 
-    function removeReturnBtn() {
-        const buttons = document.querySelectorAll('.returnBtn');
-        buttons.forEach(btn => btn.remove());
-    };
-
     function getReturnBtn(scrollDirection, returnBtn) {
         const btn = returnBtn.cloneNode();
         btn.id = 'return';
@@ -139,3 +134,8 @@ export function centerPage() {
         logoContainer.appendChild(info);
     }
 }
+
+export function removeReturnBtn() {
+    const buttons = document.querySelectorAll('.returnBtn');
+    buttons.forEach(btn => btn.remove());
+};
