@@ -136,6 +136,6 @@ export function centerPage() {
 }
 
 export function removeReturnBtn() {
-    const buttons = document.querySelectorAll('.returnBtn');
-    buttons.forEach(btn => btn.remove());
+    const button = document.getElementById('return');
+    button.remove();
 };
