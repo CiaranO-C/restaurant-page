@@ -1,6 +1,7 @@
-export {leftCol, centerCol, rightCol, menuPage};
 import { removeReturnBtn } from "./centerPage";
 
+
+export function basePages(){
 const leftCol = document.createElement('div');
 const centerCol = document.createElement('div');
 const rightCol = document.createElement('div');
@@ -22,3 +23,8 @@ window.addEventListener('resize', () => {
     centerCol.scrollIntoView({ behavior: 'smooth', block: 'end' });
     removeReturnBtn();
 });
+
+return {leftCol, centerCol, rightCol, menuPage};
+};
+
+export {leftCol, centerCol, rightCol, menuPage};
